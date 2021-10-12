@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name:  node-sigleservice-deployment
+  namespace: default
+  labels:
+    app:  node-sigleservice-deployment
+spec:
+  selector:
+    matchLabels:
+      app: node-sigleservice-pod
+  template:
+    metadata:
+      labels:
+        app:  node-sigleservice-pod # pods for deployment
+    spec:
+      # initContainers:
+        # Init containers are exactly like regular containers, except:
+          # - Init containers always run to completion.
+          # - Each init container must complete successfully before the next one starts.
+      containers:
+      - name:  node-sigleservice-container
+        image:  mast007/singleserv:0.0.1
+        resources:
+          limits:
+            cpu: "500m" # 0.5 CPU
+            memory: "128Mi" # 128 mb
+        ports:
+        - containerPort:  7090

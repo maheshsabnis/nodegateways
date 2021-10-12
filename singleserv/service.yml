@@ -1,0 +1,14 @@
+# service.yml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: node-k8s
+  name: node-sigleservice-service
+spec:
+  ports:
+    - port: 8080 # external port used to access the service
+      targetPort: 7090 # container port
+  selector:
+    app: node-sigleservice-pod
+  type: LoadBalancer # allows the public access of the service
