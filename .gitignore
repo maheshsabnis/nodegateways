@@ -1,0 +1,4 @@
+node_modules
+./singleserv/node_modules
+./secondserv/node_modules
+./microservices/node_modules
