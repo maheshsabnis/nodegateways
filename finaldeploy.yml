@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twoservice
+spec:
+  selector:
+    matchLabels:
+      name: twoservice
+  template:
+    metadata:
+      labels:
+        name: twoservice
+    spec:
+      containers:
+        - name: singlesercntainer
+          image: mast007/singleserv:0.0.1
+          resources:
+            limits:
+              cpu: "500m" # 0.5 CPU
+              memory: "128Mi" # 128 mb
+          ports:
+            - name: http
+              containerPort: 7090
+        - name: secondservcontainer
+          image: mast007/secondserv:0.0.1
+          resources:
+            limits:
+              cpu: "500m" # 0.5 CPU
+              memory: "128Mi" # 128 mb
+          ports:
+            - name: http-second
+              containerPort: 7091
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: twoservice
+spec:
+  selector:
+     name: twoservice
+  ports:
+    - name: http
+      port: 7090
+      targetPort: http
+    - name: http-second
+      port: 7091
+      targetPort: http-second
+  type: LoadBalancer # allows the public access of the service    
